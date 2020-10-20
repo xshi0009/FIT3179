@@ -13,7 +13,7 @@
       "lookup": "properties.NAME_1",
       "from": {
         "data": {
-          "url": "https://github.com/xshi0009/FIT3179/blob/main/data_india_air.csv"
+          "url": "https://raw.githubusercontent.com/xshi0009/FIT3179/main/data_india_air.csv"
         },
         "key": "State",
         "fields": ["so2"]

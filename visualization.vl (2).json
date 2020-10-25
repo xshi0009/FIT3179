@@ -1,0 +1,47 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "title": "Air pollution in Uttar Pradesh",
+  "width": 1200,
+  "height": 600,
+  "data": {
+    "url": "https://raw.githubusercontent.com/xshi0009/FIT3179/main/data_india_air.csv"
+  },
+  "params": [
+    {
+      "name": "so2_Above",
+      "value": 0,
+      "bind": {
+        "input": "range",
+        "min": 0,
+        "max": 5,
+        "step": 1,
+        "name": "Minimum so2: "
+      }
+    }
+  ],
+  "transform": [
+    {"filter": "datum.state==='Uttar Pradesh'"},
+    {"filter": "datum.so2>so2_Above"},
+    {"filter": "datum.location==='Allahabad'"},
+    {"filter": "datum.location_monitoring_station==='Bharat Yantra Nigam Ltd'"},
+    {
+      "filter": {
+        "field": "sampling_date",
+        "range": [
+          {"year": 2012, "month": "jan", "date": 1},
+          {"year": 2012, "month": "dec", "date": 20}
+        ]
+      }
+    }
+  ],
+  "mark": "line",
+  "encoding": {
+    "x": {"field": "date", "type": "ordinal"},
+    "y": {"field": "so2", "type": "quantitative"},
+    "tooltip": [
+      {"field": "date", "type": "ordinal", "title": "state"},
+      {"field": "so2", "type": "quantitative"}
+    ]
+  },
+  "config": {}
+}

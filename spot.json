@@ -1,0 +1,65 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "title": "Air pollution in 5 state 2015",
+  "width": 500,
+  "height": 350,
+  "data": {
+    "url": "https://raw.githubusercontent.com/xshi0009/FIT3179/main/data_india_air.csv"
+  },
+  "transform": [
+    {
+      "filter": {
+        "field": "sampling_date",
+        "range": [{"year": 2015}, {"year": 2015}]
+      }
+    }
+  ],
+  "selection": {
+    "state_highlight": {"type": "single", "fields": ["state"], "bind": "legend"}
+  },
+  "mark": "circle",
+  "encoding": {
+    "x": {"aggregate": "average", "field": "no2", "type": "quantitative"},
+    "y": {"aggregate": "average", "field": "so2", "type": "quantitative"},
+    "size": {"aggregate": "average", "field": "rspm", "type": "quantitative"},
+    "color": {
+      "field": "state",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Uttar Pradesh",
+          "Rajasthan",
+          "Andhra Pradesh",
+          "Karnataka",
+          "Delhi"
+        ],
+        "range": ["#de2d26", "#2b8cbe", "#91003f", "#525252", "#c994c7"]
+      }
+    },
+    "opacity": {
+      "condition": {"selection": "state_highlight", "value": 0.6},
+      "value": 0.2
+    },
+    "tooltip": [
+      {
+        "aggregate": "average",
+        "field": "so2",
+        "type": "quantitative",
+        "format": ","
+      },
+      {
+        "aggregate": "average",
+        "field": "no2",
+        "type": "quantitative",
+        "format": ","
+      },
+      {
+        "aggregate": "average",
+        "field": "rspm",
+        "type": "quantitative",
+        "format": ","
+      }
+    ]
+  },
+  "config": {}
+}

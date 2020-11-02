@@ -1,0 +1,67 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "title": "Air pollution in Uttar Pradesh",
+  "width": 500,
+  "height": 350,
+  "data": {
+    "url": "https://raw.githubusercontent.com/xshi0009/FIT3179/main/data_india_air.csv"
+  },
+  "transform": [
+    {"filter": "datum.state==='Uttar Pradesh'"},
+    {"filter": "20>datum.so2>0"},
+    {"filter": "datum.location!='Gajraula'"},
+    {"filter": "datum.location!='Allahabad'"},
+    {"filter": "datum.location!='Renusagar'"},
+    {"filter": "datum.location!='Khurja'"},
+    {"filter": "datum.location!='Jhansi'"},
+    {
+      "filter": {
+        "field": "sampling_date",
+        "range": [{"year": 2004}, {"year": 2010}]
+      }
+    }
+  ],
+  "selection": {
+    "location_highlight": {
+      "type": "single",
+      "fields": ["location"],
+      "bind": "legend"
+    }
+  },
+  "mark": {"type": "line", "point": {"filled": false, "fill": "white"}},
+  "encoding": {
+    "x": {"timeUnit": "year", "field": "sampling_date", "type": "ordinal"},
+    "y": {"aggregate": "average", "field": "so2", "type": "quantitative"},
+    "color": {
+      "field": "location",
+      "type": "nominal",
+      "scale": {
+        "range": [
+          "#de2d26",
+          "#9ebcda",
+          "#2b8cbe",
+          "#91003f",
+          "#525252",
+          "#fec44f",
+          "#d95f0e",
+          "#c994c7",
+          "#dd1c77"
+        ]
+      }
+    },
+    "opacity": {
+      "condition": {"selection": "location_highlight", "value": 0.6},
+      "value": 0.2
+    },
+    "tooltip": [
+      {
+        "timeUnit": "year",
+        "field": "sampling_date",
+        "type": "ordinal",
+        "title": "date"
+      },
+      {"aggregate": "average", "field": "so2", "type": "quantitative"}
+    ]
+  },
+  "config": {}
+}

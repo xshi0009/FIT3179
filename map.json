@@ -1,0 +1,36 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "title": "India air quality",
+  "width": 500,
+  "height": 350,
+  "projection": {"type": "equirectangular"},
+  "data": {
+    "url": "https://raw.githubusercontent.com/xshi0009/FIT3179/main/india-states%20(2).topojson",
+    "format": {"type": "topojson", "feature": "IND_adm1"}
+  },
+  "transform": [
+    {
+      "lookup": "properties.NAME_1",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/xshi0009/FIT3179/main/data_india_air.csv"
+        },
+        "key": "state",
+        "fields": ["so2"]
+      }
+    }
+  ],
+  "mark": {"type": "geoshape"},
+  "encoding": {
+    "color": {
+      "field": "so2",
+      "type": "quantitative",
+      "scale": {"type": "log", "scheme": "Oranges"}
+    },
+    "tooltip": [
+      {"field": "properties.NAME_1", "type": "nominal", "title": "state"},
+      {"field": "so2", "type": "quantitative"}
+    ]
+  },
+  "config": {}
+}
